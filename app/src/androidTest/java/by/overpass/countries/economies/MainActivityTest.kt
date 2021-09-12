@@ -7,7 +7,7 @@ import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
 
-class CountriesActivityTest {
+class MainActivityTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
