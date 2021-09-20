@@ -16,3 +16,5 @@
   enabled: false
 - name: TRAILING_COMMA
   enabled: true
+- name: WHEN_WITHOUT_ELSE
+  enabled: false

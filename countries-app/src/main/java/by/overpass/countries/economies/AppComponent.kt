@@ -1,3 +1,7 @@
+/**
+ * DI container
+ */
+
 package by.overpass.countries.economies
 
 import by.overpass.countries.economies.data.LegacyOecApi

@@ -60,50 +60,6 @@ data class Country(
     val weight: Double? = null,
 ) {
     val imageUrl: String = OEC_LEGACY_API_BASE_URL + image
-
-//    override fun equals(other: Any?): Boolean {
-//        if (this === other) return true
-//        if (javaClass != other?.javaClass) return false
-//
-//        other as Country
-//
-//        if (name != other.name) return false
-//        if (bordersLand != other.bordersLand) return false
-//        if (bordersMaritime != other.bordersMaritime) return false
-//        if (color != other.color) return false
-//        if (comtradeName != other.comtradeName) return false
-//        if (displayId != other.displayId) return false
-//        if (icon != other.icon) return false
-//        if (id != other.id) return false
-//        if (id2Char != other.id2Char) return false
-//        if (idNum != other.idNum) return false
-//        if (image != other.image) return false
-//        if (imageAuthor != other.imageAuthor) return false
-//        if (imageLink != other.imageLink) return false
-//        if (palette != other.palette) return false
-//        if (imageUrl != other.imageUrl) return false
-//
-//        return true
-//    }
-//
-//    override fun hashCode(): Int {
-//        var result = name.hashCode()
-//        result = 31 * result + (bordersLand?.hashCode() ?: 0)
-//        result = 31 * result + (bordersMaritime?.hashCode() ?: 0)
-//        result = 31 * result + color.hashCode()
-//        result = 31 * result + (comtradeName?.hashCode() ?: 0)
-//        result = 31 * result + (displayId?.hashCode() ?: 0)
-//        result = 31 * result + (icon?.hashCode() ?: 0)
-//        result = 31 * result + (id?.hashCode() ?: 0)
-//        result = 31 * result + (id2Char?.hashCode() ?: 0)
-//        result = 31 * result + (idNum?.hashCode() ?: 0)
-//        result = 31 * result + image.hashCode()
-//        result = 31 * result + (imageAuthor?.hashCode() ?: 0)
-//        result = 31 * result + (imageLink?.hashCode() ?: 0)
-//        result = 31 * result + (palette?.hashCode() ?: 0)
-//        result = 31 * result + imageUrl.hashCode()
-//        return result
-//    }
 }
 
 /**

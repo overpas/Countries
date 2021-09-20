@@ -109,24 +109,7 @@ fun CountriesApp(appComponent: AppComponent) {
         val navController = rememberNavController()
         Scaffold(
             bottomBar = {
-                BottomNavigation {
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    val currentDestination = navBackStackEntry?.destination
-                    BottomNavItem.all().forEach { item ->
-                        CountriesAppBottomNavItem(
-                            item = item,
-                            currentDestination = currentDestination
-                        ) {
-                            navController.navigate(item.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }
-                    }
-                }
+                BottomNavItems(navController)
             }
         ) { innerPadding ->
             CountriesNavHost(
@@ -134,6 +117,28 @@ fun CountriesApp(appComponent: AppComponent) {
                 appComponent,
                 modifier = Modifier.padding(innerPadding),
             )
+        }
+    }
+}
+
+@Composable
+fun BottomNavItems(navController: NavHostController) {
+    BottomNavigation {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+        BottomNavItem.all().forEach { item ->
+            CountriesAppBottomNavItem(
+                item = item,
+                currentDestination = currentDestination
+            ) {
+                navController.navigate(item.route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
         }
     }
 }

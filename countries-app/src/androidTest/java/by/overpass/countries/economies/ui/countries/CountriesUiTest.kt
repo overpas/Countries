@@ -5,6 +5,7 @@ import androidx.compose.ui.test.hasProgressBarRangeInfo
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
+import by.overpass.countries.economies.MockOecApi
 import by.overpass.countries.economies.RealAppComponent
 import by.overpass.countries.economies.store
 import by.overpass.countries.redux.reducer
