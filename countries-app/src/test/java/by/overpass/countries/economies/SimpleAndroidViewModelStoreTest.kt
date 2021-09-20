@@ -1,3 +1,5 @@
+@file:Suppress("FILE_UNORDERED_IMPORTS", "HEADER_MISSING_IN_NON_SINGLE_CLASS_FILE")
+
 package by.overpass.countries.economies
 
 import by.overpass.countries.redux.Action
@@ -13,12 +15,6 @@ import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-
-private object TestAction : Action
-private sealed class TestState : State {
-    object One : TestState()
-    object Two : TestState()
-}
 
 class SimpleAndroidViewModelStoreTest {
 
@@ -52,4 +48,10 @@ class SimpleAndroidViewModelStoreTest {
 
         assertEquals(TestState.Two, store.state.first())
     }
+}
+
+private object TestAction : Action
+private sealed class TestState : State {
+    object One : TestState()
+    object Two : TestState()
 }

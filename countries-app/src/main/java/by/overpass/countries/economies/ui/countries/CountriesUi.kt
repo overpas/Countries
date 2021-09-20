@@ -52,9 +52,7 @@ fun CountriesList(
     countriesState: CountriesState,
 ) {
     when (countriesState) {
-        is CountriesState.CountriesLoaded -> {
-            CountriesLoaded(navHostController, countriesState)
-        }
+        is CountriesState.CountriesLoaded -> CountriesLoaded(navHostController, countriesState)
         is CountriesState.Error -> TODO()
         is CountriesState.Loading -> CountriesLoading()
     }
@@ -104,23 +102,31 @@ fun CountryItem(country: UiCountry) {
                 .fillMaxWidth()
                 .height(itemHeight),
         )
-        GradientBg(
-            gradientBrush = Brush.verticalGradient(
-                0F to Color(0x00_FF_FF_FF),
-                0.8F to Color(0x50_00_00_00),
-            ),
+        TextWithDimmedBg(
+            text = country.name,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(itemHeight),
-        ) {
-            Text(
-                text = country.name,
-                style = Typography.h5,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 12.dp, bottom = 12.dp),
-            )
-        }
+        )
+    }
+}
+
+@Composable
+fun TextWithDimmedBg(text: String, modifier: Modifier = Modifier) {
+    GradientBg(
+        gradientBrush = Brush.verticalGradient(
+            0F to Color(0x00_FF_FF_FF),
+            0.8F to Color(0x50_00_00_00),
+        ),
+        modifier = modifier,
+    ) {
+        Text(
+            text = text,
+            style = Typography.h5,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp, bottom = 12.dp),
+        )
     }
 }
 

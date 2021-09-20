@@ -22,9 +22,7 @@ class SimpleAndroidViewModelStore<S : State, A : Action>(
 ) : ViewModel(), Store<S, A> {
 
     private val stateFlow: MutableStateFlow<S> = MutableStateFlow(initial)
-
-    override val state: StateFlow<S>
-        get() = stateFlow.asStateFlow()
+    override val state: StateFlow<S> = stateFlow.asStateFlow()
 
     override fun dispatch(action: A) {
         viewModelScope.launch {
@@ -37,14 +35,15 @@ class SimpleAndroidViewModelStore<S : State, A : Action>(
 
 /**
  * This is android implementation. Will be expect/actual in future
+ *
+ * @param createStore store factory
+ * @return a ready-to-use scoped [Store] instance
  */
 @Composable
 fun <S : State, A : Action> store(
     createStore: () -> Store<S, A>
 ): Store<S, A> = viewModel(
     factory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return createStore() as T
-        }
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T = createStore() as T
     }
 )

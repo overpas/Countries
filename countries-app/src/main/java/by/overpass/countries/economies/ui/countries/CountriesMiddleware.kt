@@ -11,13 +11,12 @@ class CountriesMiddleware(
         state: CountriesState,
         action: CountriesAction
     ): CountriesAction = when (action) {
-        is CountriesAction.LoadCountries -> {
+        is CountriesAction.LoadCountries ->
             CountriesAction.ShowCountries(
                 oecApi.getCountries()
                     .countries
                     .filter { it.displayId != null }
             )
-        }
         is CountriesAction.ClickCountry -> TODO()
         is CountriesAction.ShowCountries -> action.copy()
     }

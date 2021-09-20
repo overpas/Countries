@@ -41,7 +41,7 @@ buildscript {
 apply plugin: "org.cqfn.diktat.diktat-gradle-plugin"
 
 diktat {
-    inputs = files("app/src/**/*.kt")
+    inputs = files("**/src/**/*.kt")
 }
 
 task clean(type: Delete) {

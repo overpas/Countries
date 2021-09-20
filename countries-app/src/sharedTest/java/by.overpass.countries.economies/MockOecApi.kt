@@ -1,6 +1,8 @@
-package by.overpass.countries.economies.ui.countries
+package by.overpass.countries.economies
 
 import by.overpass.countries.economies.data.OecApi
+import by.overpass.countries.economies.ui.countries.CountriesResponse
+import by.overpass.countries.economies.ui.countries.Country
 
 class MockOecApi : OecApi {
 
@@ -23,7 +25,7 @@ class MockOecApi : OecApi {
                 imageAuthor = "sejanc",
                 imageLink = "https://flic.kr/p/6fsy7W",
                 palette = "[\"#d49a64\",\"#1a0a06\",\"#5a3415\"]",
-                weight = 8998983149.32,
+                weight = 8_998_983_149.32,
             ),
             Country(
                 name = "Lesotho",
@@ -52,7 +54,7 @@ class MockOecApi : OecApi {
                 imageAuthor = "Jamie McCaffrey",
                 imageLink = "https://flic.kr/p/sNGpTR",
                 palette = "[\"#5368bf\",\"#f8e4f1\"]",
-                weight = 27464888346.94,
+                weight = 27_464_888_346.94,
             ),
         )
     }

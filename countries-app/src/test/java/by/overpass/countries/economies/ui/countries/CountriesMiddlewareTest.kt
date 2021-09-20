@@ -1,10 +1,11 @@
+@file:Suppress("FILE_UNORDERED_IMPORTS")
+
 package by.overpass.countries.economies.ui.countries
 
 import by.overpass.countries.economies.data.OecApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
 import org.junit.Test
-
 
 class CountriesMiddlewareTest {
 
