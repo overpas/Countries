@@ -33,6 +33,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import by.overpass.countries.economies.di.AppComponent
+import by.overpass.countries.economies.di.CountriesComponent
+import by.overpass.countries.economies.di.RealAppComponent
 import by.overpass.countries.economies.ui.countries.Countries
 import by.overpass.countries.economies.ui.products.Products
 import by.overpass.countries.economies.ui.settings.Settings
@@ -155,16 +158,25 @@ fun CountriesNavHost(
         modifier,
     ) {
         composable(BottomNavItem.Countries.route) {
-            Countries(
-                navController,
-                store {
-                    appComponent.countriesStore()
-                },
-            )
+            CountriesDestination(navController, appComponent.countriesComponent())
         }
-        composable(BottomNavItem.Products.route) { Products(navController) }
-        composable(BottomNavItem.Settings.route) { Settings(navController) }
+        composable(BottomNavItem.Products.route) {
+            Products(navController)
+        }
+        composable(BottomNavItem.Settings.route) {
+            Settings(navController)
+        }
     }
+}
+
+@Composable
+fun CountriesDestination(navController: NavHostController, countriesComponent: CountriesComponent) {
+    Countries(
+        navController,
+        store {
+            countriesComponent.countriesStore()
+        },
+    )
 }
 
 @Preview(showBackground = true)
