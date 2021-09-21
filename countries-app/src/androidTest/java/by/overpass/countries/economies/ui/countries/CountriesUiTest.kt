@@ -6,7 +6,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
 import by.overpass.countries.economies.MockOecApi
-import by.overpass.countries.economies.RealAppComponent
+import by.overpass.countries.economies.di.RealAppComponent
 import by.overpass.countries.economies.store
 import by.overpass.countries.redux.reducer
 import org.junit.Rule
@@ -14,9 +14,9 @@ import org.junit.Test
 
 class CountriesUiTest {
 
-    private val appComponent = RealAppComponent
+    private val countriesComponent = RealAppComponent.countriesComponent()
     private val mockApi = MockOecApi()
-    private val middleware = appComponent.countriesMiddleware(mockApi)
+    private val middleware = countriesComponent.countriesMiddleware(mockApi)
 
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -28,7 +28,7 @@ class CountriesUiTest {
             Countries(
                 rememberNavController(),
                 store {
-                    appComponent.countriesStore(
+                    countriesComponent.countriesStore(
                         countriesMiddleware = middleware,
                         countriesReducer = reducer { state, action ->
                             CountriesState.Loading
@@ -49,7 +49,7 @@ class CountriesUiTest {
             Countries(
                 rememberNavController(),
                 store {
-                    appComponent.countriesStore(countriesMiddleware = middleware)
+                    countriesComponent.countriesStore(countriesMiddleware = middleware)
                 }
             )
         }
@@ -73,7 +73,7 @@ class CountriesUiTest {
             Countries(
                 rememberNavController(),
                 store {
-                    appComponent.countriesStore(
+                    countriesComponent.countriesStore(
                         countriesMiddleware = middleware,
                         countriesReducer = reducer { state: CountriesState, action: CountriesAction ->
                             CountriesState.Error("message")
