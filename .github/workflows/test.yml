@@ -20,7 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Test
-        run: ./gradlew testDebug
-# TODO: Submit test coverage report
-#      - name: Submit report
-#        run: bash <(curl -s https://codecov.io/bash)
+        run: ./gradlew jacocoTestReport
+      - name: Submit report
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+            project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+            coverage-reports: /countries-app/build/jacoco/jacoco.xml
