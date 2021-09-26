@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import by.overpass.countries.economies.ui.theme.CountriesTheme
 
+@Suppress("UnusedPrivateMember")
 @Composable
 fun Settings(navHostController: NavHostController) {
     Text("Settings")
