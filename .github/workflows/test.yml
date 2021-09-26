@@ -21,10 +21,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Test
         run: ./gradlew jacocoTestReport
-      - name: pwd
-        run: pwd
       - name: Submit report
-        uses: codacy/codacy-coverage-reporter-action@v1
-        with:
-            project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-            coverage-reports: /countries-app/build/jacoco/jacoco.xml
+        run: bash <(curl -s https://codecov.io/bash)
