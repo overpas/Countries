@@ -19,8 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: UI tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 27
+          script: ./gradlew connectedDebugAndroidTest
       - name: Test
-        run: ./gradlew testDebug
-# TODO: Submit test coverage report
-#      - name: Submit report
-#        run: bash <(curl -s https://codecov.io/bash)
+        run: ./gradlew jacocoTestReport
+      - name: Submit report
+        run: bash <(curl -s https://codecov.io/bash)

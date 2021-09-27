@@ -2,6 +2,12 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
+    id("io.gitlab.arturbosch.detekt")
+    id "com.dicedmelon.gradle.jacoco-android"
+}
+
+jacoco {
+    toolVersion = "$jacoco_tool_version"
 }
 
 android {

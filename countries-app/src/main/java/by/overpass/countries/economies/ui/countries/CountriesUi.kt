@@ -23,13 +23,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import by.overpass.countries.economies.ui.theme.CountriesTheme
+import by.overpass.countries.economies.ui.theme.DimmedBlack
 import by.overpass.countries.economies.ui.theme.Shapes
+import by.overpass.countries.economies.ui.theme.Transparent
 import by.overpass.countries.economies.ui.theme.Typography
 import by.overpass.countries.redux.Store
 import coil.compose.rememberImagePainter
@@ -70,6 +71,7 @@ fun CountriesLoading(modifier: Modifier = Modifier) {
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Composable
 fun CountriesLoaded(
     navHostController: NavHostController,
@@ -111,12 +113,13 @@ fun CountryItem(country: UiCountry) {
     }
 }
 
+@Suppress("MagicNumber")
 @Composable
 fun TextWithDimmedBg(text: String, modifier: Modifier = Modifier) {
     GradientBg(
         gradientBrush = Brush.verticalGradient(
-            0F to Color(0x00_FF_FF_FF),
-            0.8F to Color(0x50_00_00_00),
+            0F to Transparent,
+            0.8F to DimmedBlack,
         ),
         modifier = modifier,
     ) {
@@ -145,14 +148,15 @@ fun GradientBg(
     }
 }
 
+@Suppress("MagicNumber")
 @Preview
 @Composable
 fun PreviewGradientBg() {
     CountriesTheme {
         GradientBg(
             gradientBrush = Brush.verticalGradient(
-                0F to Color(0x00_FF_FF_FF),
-                0.8F to Color(0x50_00_00_00),
+                0F to Transparent,
+                0.8F to DimmedBlack,
             ),
         ) {
             Text(text = "text")
