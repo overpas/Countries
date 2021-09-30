@@ -23,8 +23,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '11'
-      - name: Check Java home
-        run: echo $JAVA_HOME
       - name: UI tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
