@@ -64,6 +64,15 @@ android {
             java.srcDirs += sharedTestDir
         }
     }
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+                excludes += ['jdk.internal.*']
+            }
+        }
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
