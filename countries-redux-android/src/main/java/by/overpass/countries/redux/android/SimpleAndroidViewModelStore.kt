@@ -1,4 +1,4 @@
-package by.overpass.countries.economies
+package by.overpass.countries.redux.android
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class SimpleAndroidViewModelStore<S : State, A : Action>(
+public class SimpleAndroidViewModelStore<S : State, A : Action>(
     private val middleware: Middleware<S, A>,
     private val reducer: Reducer<S, A>,
     initial: S,
@@ -40,7 +40,7 @@ class SimpleAndroidViewModelStore<S : State, A : Action>(
  * @return a ready-to-use scoped [Store] instance
  */
 @Composable
-fun <S : State, A : Action> store(
+public fun <S : State, A : Action> store(
     createStore: () -> Store<S, A>
 ): Store<S, A> = viewModel(
     factory = object : ViewModelProvider.Factory {

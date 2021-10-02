@@ -7,7 +7,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
 import by.overpass.countries.economies.MockOecApi
 import by.overpass.countries.economies.di.RealAppComponent
-import by.overpass.countries.economies.store
+import by.overpass.countries.redux.android.store
 import by.overpass.countries.redux.reducer
 import org.junit.Rule
 import org.junit.Test

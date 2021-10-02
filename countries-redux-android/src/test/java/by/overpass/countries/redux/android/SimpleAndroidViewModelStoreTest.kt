@@ -1,6 +1,6 @@
 @file:Suppress("FILE_UNORDERED_IMPORTS", "HEADER_MISSING_IN_NON_SINGLE_CLASS_FILE")
 
-package by.overpass.countries.economies
+package by.overpass.countries.redux.android
 
 import by.overpass.countries.redux.Action
 import by.overpass.countries.redux.State
