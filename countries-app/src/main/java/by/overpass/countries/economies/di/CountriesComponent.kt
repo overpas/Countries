@@ -4,7 +4,6 @@
 
 package by.overpass.countries.economies.di
 
-import by.overpass.countries.economies.SimpleAndroidViewModelStore
 import by.overpass.countries.economies.data.OecApi
 import by.overpass.countries.economies.ui.countries.CountriesAction
 import by.overpass.countries.economies.ui.countries.CountriesMiddleware
@@ -13,6 +12,7 @@ import by.overpass.countries.economies.ui.countries.CountriesState
 import by.overpass.countries.redux.Middleware
 import by.overpass.countries.redux.Reducer
 import by.overpass.countries.redux.Store
+import by.overpass.countries.redux.android.SimpleAndroidViewModelStore
 
 interface CountriesComponent {
 
