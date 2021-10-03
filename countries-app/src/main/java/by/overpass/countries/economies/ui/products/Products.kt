@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import by.overpass.countries.economies.ui.theme.CountriesTheme
+import by.overpass.countries.ui.common.theme.CountriesTheme
 
 @Suppress("UnusedPrivateMember")
 @Composable

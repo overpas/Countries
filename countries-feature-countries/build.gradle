@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
     id("io.gitlab.arturbosch.detekt")
@@ -14,22 +14,16 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "by.overpass.countries.economies"
         minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
-        debug {
-            testCoverageEnabled true
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -41,7 +35,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
     }
     buildFeatures {
         compose true
@@ -50,36 +43,12 @@ android {
         kotlinCompilerExtensionVersion compose_version
         kotlinCompilerVersion kotlin_version
     }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
-    }
-    sourceSets {
-        def sharedTestDir = "src/sharedTest/java"
-        test {
-            java.srcDirs += sharedTestDir
-        }
-        androidTest {
-            java.srcDirs += sharedTestDir
-        }
-    }
-    testOptions {
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-                excludes += ['jdk.internal.*']
-            }
-        }
-        unitTests.returnDefaultValues = true
-    }
 }
 
 dependencies {
     implementation project(":countries-redux-android")
     implementation project(":countries-data")
     implementation project(":countries-ui-common")
-    implementation project(":countries-feature-countries")
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "com.google.android.material:material:$google_android_material_version"

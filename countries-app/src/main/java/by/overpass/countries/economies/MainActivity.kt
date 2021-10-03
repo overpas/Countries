@@ -12,8 +12,8 @@ import androidx.navigation.compose.rememberNavController
 import by.overpass.countries.economies.di.AppComponent
 import by.overpass.countries.economies.di.RealAppComponent
 import by.overpass.countries.economies.ui.home.Home
-import by.overpass.countries.economies.ui.theme.CountriesTheme
 import by.overpass.countries.redux.android.store
+import by.overpass.countries.ui.common.theme.CountriesTheme
 
 class MainActivity : ComponentActivity() {
 

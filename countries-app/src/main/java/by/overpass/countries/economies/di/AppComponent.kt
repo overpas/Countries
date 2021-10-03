@@ -4,6 +4,11 @@
 
 package by.overpass.countries.economies.di
 
+import by.overpass.countries.data.NetworkComponent
+import by.overpass.countries.data.RealNetworkComponent
+import by.overpass.countries.feature.countries.CountriesComponent
+import by.overpass.countries.feature.countries.RealCountriesComponent
+
 interface AppComponent {
 
     fun countriesComponent(): CountriesComponent
