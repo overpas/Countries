@@ -24,10 +24,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import by.overpass.countries.economies.di.AppComponent
-import by.overpass.countries.economies.di.CountriesComponent
-import by.overpass.countries.economies.ui.countries.Countries
 import by.overpass.countries.economies.ui.products.Products
 import by.overpass.countries.economies.ui.settings.Settings
+import by.overpass.countries.feature.countries.Countries
+import by.overpass.countries.feature.countries.CountriesComponent
 import by.overpass.countries.redux.Store
 import by.overpass.countries.redux.android.store
 
