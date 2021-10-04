@@ -9,7 +9,7 @@ buildscript {
         diktat_version = '1.0.0-rc.3'
         detekt_version = '1.18.1'
         jacoco_tool_version = '0.8.7'
-        jacoco_android_version = '0.1.5-SNAPSHOT'
+        jacoco_android_version = '0.1.6-SNAPSHOT'
 
         // Libs
         compose_version = '1.0.2'
