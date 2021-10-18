@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'kotlin'
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
-    id("io.gitlab.arturbosch.detekt")
+    id "io.gitlab.arturbosch.detekt"
     id "jacoco"
 }
 

@@ -2,8 +2,10 @@
 
 package by.overpass.countries.feature.countries
 
-import by.overpass.countries.data.CountriesResponse
 import by.overpass.countries.data.OecApi
+import by.overpass.countries.data.countries.CountriesResponse
+import by.overpass.countries.data.flows.Hs92ProductsExportsImports
+import by.overpass.countries.data.products.Products
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -12,6 +14,17 @@ class CountriesMiddlewareTest {
 
     private val stubOecApi: OecApi = object : OecApi {
         override suspend fun getCountries(): CountriesResponse = CountriesResponse(listOf())
+
+        override suspend fun getHs92TradeFlows(
+            countryId: String,
+            tradeFlow: String,
+            year: Int,
+            destination: String,
+            products: String
+        ): Hs92ProductsExportsImports = TODO("Not yet implemented")
+
+        override suspend fun getProducts(classification: String): Products =
+            TODO("Not yet implemented")
     }
     private val countriesMiddleware = CountriesMiddleware(stubOecApi)
 

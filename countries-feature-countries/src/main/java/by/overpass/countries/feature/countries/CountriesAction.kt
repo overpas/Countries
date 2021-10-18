@@ -1,6 +1,6 @@
 package by.overpass.countries.feature.countries
 
-import by.overpass.countries.data.Country
+import by.overpass.countries.data.countries.Country
 import by.overpass.countries.redux.Action
 
 /**

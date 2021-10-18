@@ -2,8 +2,9 @@
  * Countries data
  */
 
-package by.overpass.countries.data
+package by.overpass.countries.data.countries
 
+import by.overpass.countries.data.OEC_LEGACY_API_BASE_URL
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

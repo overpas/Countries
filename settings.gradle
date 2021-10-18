@@ -9,6 +9,6 @@ rootProject.name = "Countries"
 include ':countries-app'
 include ':countries-redux'
 include ':countries-redux-android'
-include ':countries-data'
+include ':countries-api'
 include ':countries-feature-countries'
 include ':countries-ui-common'
