@@ -27,7 +27,7 @@ import by.overpass.countries.economies.di.AppComponent
 import by.overpass.countries.economies.ui.products.Products
 import by.overpass.countries.economies.ui.settings.Settings
 import by.overpass.countries.feature.countries.Countries
-import by.overpass.countries.feature.countries.CountriesComponent
+import by.overpass.countries.feature.trade.flows.TradeFlows
 import by.overpass.countries.redux.Store
 import by.overpass.countries.redux.android.store
 
@@ -77,7 +77,7 @@ fun HomeBottomNavItems(navController: NavHostController, bottomNavItems: List<Ui
         bottomNavItems.forEach { item ->
             CountriesAppBottomNavItem(
                 item = item,
-                currentDestination = currentDestination
+                currentDestination = currentDestination,
             ) {
                 navController.navigate(item.route) {
                     popUpTo(navController.graph.findStartDestination().id) {
@@ -104,7 +104,7 @@ fun HomeNav(
         modifier,
     ) {
         composable(homeDestinations.countries) {
-            CountriesDestination(navController, appComponent.countriesComponent())
+            CountriesDestination(appComponent)
         }
         composable(homeDestinations.products) {
             Products(navController)
@@ -116,11 +116,16 @@ fun HomeNav(
 }
 
 @Composable
-fun CountriesDestination(navController: NavHostController, countriesComponent: CountriesComponent) {
+fun CountriesDestination(appComponent: AppComponent) {
     Countries(
-        navController,
         store {
-            countriesComponent.countriesStore()
+            appComponent.countriesComponent().countriesStore()
         },
-    )
+    ) { countryId ->
+        TradeFlows(
+            store {
+                appComponent.tradeFlowsComponent(countryId).tradeFlowsStore()
+            }
+        )
+    }
 }

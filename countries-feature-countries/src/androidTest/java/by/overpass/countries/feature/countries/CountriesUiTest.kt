@@ -4,7 +4,6 @@ import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.test.hasProgressBarRangeInfo
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.navigation.compose.rememberNavController
 import by.overpass.countries.data.MockOecApi
 import by.overpass.countries.data.RealNetworkComponent
 import by.overpass.countries.redux.android.store
@@ -26,7 +25,6 @@ class CountriesUiTest {
     fun testLoading() {
         composeTestRule.setContent {
             Countries(
-                rememberNavController(),
                 store {
                     countriesComponent.countriesStore(
                         countriesMiddleware = middleware,
@@ -35,7 +33,7 @@ class CountriesUiTest {
                         },
                     )
                 }
-            )
+            ) {}
         }
 
         composeTestRule
@@ -47,11 +45,10 @@ class CountriesUiTest {
     fun testCountriesLoaded() {
         composeTestRule.setContent {
             Countries(
-                rememberNavController(),
                 store {
                     countriesComponent.countriesStore(countriesMiddleware = middleware)
                 }
-            )
+            ) {}
         }
 
         composeTestRule
@@ -71,7 +68,6 @@ class CountriesUiTest {
     fun testCountriesLoadingError() {
         composeTestRule.setContent {
             Countries(
-                rememberNavController(),
                 store {
                     countriesComponent.countriesStore(
                         countriesMiddleware = middleware,
@@ -80,7 +76,7 @@ class CountriesUiTest {
                         },
                     )
                 }
-            )
+            ) {}
         }
     }
 }
