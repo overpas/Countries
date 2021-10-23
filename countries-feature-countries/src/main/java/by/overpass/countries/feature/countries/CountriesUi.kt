@@ -91,7 +91,6 @@ fun CountriesLoaded(
             TradeFlowsDestination(backStackEntry.arg("countryId"))
         }
     }
-
 }
 
 @Composable
