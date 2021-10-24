@@ -1,5 +1,8 @@
 package by.overpass.countries.feature.countries
 
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.test.hasProgressBarRangeInfo
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -32,7 +35,10 @@ class CountriesUiTest {
                             CountriesState.Loading
                         },
                     )
-                }
+                },
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
             ) {}
         }
 
@@ -47,7 +53,10 @@ class CountriesUiTest {
             Countries(
                 store {
                     countriesComponent.countriesStore(countriesMiddleware = middleware)
-                }
+                },
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
             ) {}
         }
 
@@ -75,7 +84,10 @@ class CountriesUiTest {
                             CountriesState.Error("message")
                         },
                     )
-                }
+                },
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
             ) {}
         }
     }

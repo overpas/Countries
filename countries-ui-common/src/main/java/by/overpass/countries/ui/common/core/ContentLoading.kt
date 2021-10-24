@@ -18,11 +18,9 @@ import by.overpass.countries.ui.common.theme.CountriesTheme
 fun ContentLoading(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
+        modifier = modifier,
     ) {
-        CircularProgressIndicator(modifier)
+        CircularProgressIndicator()
     }
 }
 
@@ -30,6 +28,10 @@ fun ContentLoading(modifier: Modifier = Modifier) {
 @Composable
 fun PreviewContentLoading() {
     CountriesTheme {
-        ContentLoading()
+        ContentLoading(
+            Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+        )
     }
 }

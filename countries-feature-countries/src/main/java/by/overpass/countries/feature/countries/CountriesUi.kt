@@ -45,50 +45,59 @@ import coil.compose.rememberImagePainter
 @Composable
 fun Countries(
     countriesStore: Store<CountriesState, CountriesAction>,
+    modifier: Modifier = Modifier,
     TradeFlowsDestination: @Composable (countryId: String) -> Unit,
 ) {
     val countriesState: CountriesState by countriesStore.state.collectAsState()
     LaunchedEffect(true) {
         countriesStore.dispatch(CountriesAction.LoadCountries)
     }
-    CountriesContent(countriesState, TradeFlowsDestination)
+    CountriesContent(countriesState, modifier, TradeFlowsDestination)
 }
 
 @Composable
 fun CountriesContent(
     countriesState: CountriesState,
+    modifier: Modifier = Modifier,
     TradeFlowsDestination: @Composable (countryId: String) -> Unit,
 ) {
     when (countriesState) {
-        is CountriesState.CountriesLoaded -> CountriesLoaded(countriesState, TradeFlowsDestination)
+        is CountriesState.CountriesLoaded -> CountriesLoaded(
+            countriesState,
+            modifier,
+            TradeFlowsDestination
+        )
         is CountriesState.Error -> TODO()
-        is CountriesState.Loading -> ContentLoading()
+        is CountriesState.Loading -> ContentLoading(modifier)
     }
 }
 
 @Composable
 fun CountriesLoaded(
-    countriesState: CountriesState.CountriesLoaded,
+    state: CountriesState.CountriesLoaded,
+    modifier: Modifier = Modifier,
     TradeFlowsDestination: @Composable (countryId: String) -> Unit,
 ) {
     val navHostController = rememberNavController()
     NavHost(
         navController = navHostController,
-        startDestination = "countriesLoaded"
+        startDestination = state.initialDestination,
+        modifier = modifier
     ) {
-        composable("countriesLoaded") {
+        composable(state.countriesLoadedDestination) {
             CountriesLoadedContent(
-                countriesState = countriesState,
+                countriesState = state,
                 navHostController = navHostController,
+                modifier = Modifier.fillMaxWidth()
             )
         }
         composable(
-            route = "exportsImports/{countryId}",
+            route = state.countryExportsDestination,
             arguments = listOf(
-                navArgument("countryId") { type = NavType.StringType },
+                navArgument(state.paramCountryId) { type = NavType.StringType },
             )
         ) { backStackEntry ->
-            TradeFlowsDestination(backStackEntry.arg("countryId"))
+            TradeFlowsDestination(backStackEntry.arg(state.paramCountryId))
         }
     }
 }
@@ -97,12 +106,16 @@ fun CountriesLoaded(
 fun CountriesLoadedContent(
     countriesState: CountriesState.CountriesLoaded,
     navHostController: NavHostController,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier,
     ) {
         items(countriesState.countries) { country ->
-            CountryItem(country = country) {
+            CountryItem(
+                country = country,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 navHostController.navigate("exportsImports/${country.id}")
             }
         }
@@ -110,12 +123,15 @@ fun CountriesLoadedContent(
 }
 
 @Composable
-fun CountryItem(country: UiCountry, onClick: (UiCountry) -> Unit) {
+fun CountryItem(
+    country: UiCountry,
+    modifier: Modifier = Modifier,
+    onClick: (UiCountry) -> Unit,
+) {
     val itemHeight = 80.dp
     Box(
         contentAlignment = Alignment.BottomStart,
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
             .padding(horizontal = 12.dp, vertical = 6.dp)
             .clip(Shapes.medium),
     ) {

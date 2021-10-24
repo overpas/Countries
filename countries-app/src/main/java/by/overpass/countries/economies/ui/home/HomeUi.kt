@@ -5,6 +5,8 @@
 package by.overpass.countries.economies.ui.home
 
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -104,7 +106,12 @@ fun HomeNav(
         modifier,
     ) {
         composable(homeDestinations.countries) {
-            CountriesDestination(appComponent)
+            CountriesDestination(
+                appComponent,
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+            )
         }
         composable(homeDestinations.products) {
             Products(navController)
@@ -116,16 +123,20 @@ fun HomeNav(
 }
 
 @Composable
-fun CountriesDestination(appComponent: AppComponent) {
+fun CountriesDestination(appComponent: AppComponent, modifier: Modifier = Modifier) {
     Countries(
         store {
             appComponent.countriesComponent().countriesStore()
         },
+        modifier
     ) { countryId ->
         TradeFlows(
             store {
                 appComponent.tradeFlowsComponent(countryId).tradeFlowsStore()
-            }
+            },
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
         )
     }
 }

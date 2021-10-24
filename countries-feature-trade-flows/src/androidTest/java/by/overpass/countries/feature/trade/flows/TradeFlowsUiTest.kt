@@ -1,5 +1,8 @@
 package by.overpass.countries.feature.trade.flows
 
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.test.hasProgressBarRangeInfo
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -31,7 +34,10 @@ class TradeFlowsUiTest {
                             TradeFlowsState.Loading
                         },
                     )
-                }
+                },
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
             )
         }
 
@@ -51,7 +57,10 @@ class TradeFlowsUiTest {
                             TradeFlowsState.ExportsLoaded("exportsString")
                         },
                     )
-                }
+                },
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
             )
         }
 
@@ -71,7 +80,10 @@ class TradeFlowsUiTest {
                             TradeFlowsState.Error("error")
                         },
                     )
-                }
+                },
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
             )
         }
     }
