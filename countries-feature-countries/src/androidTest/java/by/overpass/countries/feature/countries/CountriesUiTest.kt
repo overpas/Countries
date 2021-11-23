@@ -39,7 +39,7 @@ class CountriesUiTest {
                 Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(),
-            ) {}
+            ) { countryId, navController -> }
         }
 
         composeTestRule
@@ -57,7 +57,7 @@ class CountriesUiTest {
                 Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(),
-            ) {}
+            ) { countryId, navController -> }
         }
 
         composeTestRule
@@ -88,7 +88,7 @@ class CountriesUiTest {
                 Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(),
-            ) {}
+            ) { countryId, navController -> }
         }
     }
 }

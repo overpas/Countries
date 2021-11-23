@@ -1,22 +1,26 @@
 package by.overpass.countries.feature.trade.flows
 
 import by.overpass.countries.redux.State
+import by.overpass.treemapchart.core.tree.Tree
 
 sealed class TradeFlowsState : State {
 
     object Loading : TradeFlowsState()
 
     /**
-     * @property exportsString the exports to be displayed
+     * @property exports the exports to be displayed
      */
     data class ExportsLoaded(
-        val exportsString: String
+        val countryName: String,
+        val exports: Tree<UiExport>,
     ) : TradeFlowsState()
 
     /**
      * @property message the message of the error
      */
     data class Error(
-        val message: String
+        val message: String,
     ) : TradeFlowsState()
+
+    data class LoadingPartOfExports(val message: String) : TradeFlowsState()
 }

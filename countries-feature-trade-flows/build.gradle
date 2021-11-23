@@ -78,6 +78,8 @@ dependencies {
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-okhttp:$ktor_version"
     implementation "io.ktor:ktor-client-serialization:$ktor_version"
+    implementation "io.github.overpas:treemap-core:0.0.2"
+    implementation "io.github.overpas:treemap-compose-android:0.0.2"
     testImplementation "junit:junit:$junit_version"
     testImplementation "io.ktor:ktor-client-mock:$ktor_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"

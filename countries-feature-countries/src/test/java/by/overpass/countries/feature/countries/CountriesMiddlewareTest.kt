@@ -4,8 +4,9 @@ package by.overpass.countries.feature.countries
 
 import by.overpass.countries.data.OecApi
 import by.overpass.countries.data.countries.CountriesResponse
-import by.overpass.countries.data.flows.Hs92ProductsExportsImports
+import by.overpass.countries.data.flows.Hs92ExportsImports
 import by.overpass.countries.data.products.Products
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -21,7 +22,7 @@ class CountriesMiddlewareTest {
             year: Int,
             destination: String,
             products: String
-        ): Hs92ProductsExportsImports = TODO("Not yet implemented")
+        ): Hs92ExportsImports = TODO("Not yet implemented")
 
         override suspend fun getProducts(classification: String): Products =
             TODO("Not yet implemented")
@@ -34,7 +35,7 @@ class CountriesMiddlewareTest {
             CountriesState.Loading,
             CountriesAction.LoadCountries,
         )
-        assertTrue(resultAction is CountriesAction.ShowCountries)
+        assertTrue(resultAction.first() is CountriesAction.ShowCountries)
     }
 
     @Test
@@ -43,7 +44,7 @@ class CountriesMiddlewareTest {
             CountriesState.Loading,
             CountriesAction.ShowCountries(listOf()),
         )
-        assertTrue(resultAction is CountriesAction.ShowCountries)
+        assertTrue(resultAction.first() is CountriesAction.ShowCountries)
     }
 
     @Test(expected = NotImplementedError::class)

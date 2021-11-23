@@ -46,7 +46,10 @@ import coil.compose.rememberImagePainter
 fun Countries(
     countriesStore: Store<CountriesState, CountriesAction>,
     modifier: Modifier = Modifier,
-    TradeFlowsDestination: @Composable (countryId: String) -> Unit,
+    TradeFlowsDestination: @Composable (
+        countryId: String,
+        navController: NavHostController
+    ) -> Unit,
 ) {
     val countriesState: CountriesState by countriesStore.state.collectAsState()
     LaunchedEffect(true) {
@@ -59,7 +62,10 @@ fun Countries(
 fun CountriesContent(
     countriesState: CountriesState,
     modifier: Modifier = Modifier,
-    TradeFlowsDestination: @Composable (countryId: String) -> Unit,
+    TradeFlowsDestination: @Composable (
+        countryId: String,
+        navController: NavHostController
+    ) -> Unit,
 ) {
     when (countriesState) {
         is CountriesState.CountriesLoaded -> CountriesLoaded(
@@ -76,7 +82,10 @@ fun CountriesContent(
 fun CountriesLoaded(
     state: CountriesState.CountriesLoaded,
     modifier: Modifier = Modifier,
-    TradeFlowsDestination: @Composable (countryId: String) -> Unit,
+    TradeFlowsDestination: @Composable (
+        countryId: String,
+        navController: NavHostController
+    ) -> Unit,
 ) {
     val navHostController = rememberNavController()
     NavHost(
@@ -97,7 +106,10 @@ fun CountriesLoaded(
                 navArgument(state.paramCountryId) { type = NavType.StringType },
             )
         ) { backStackEntry ->
-            TradeFlowsDestination(backStackEntry.arg(state.paramCountryId))
+            TradeFlowsDestination(
+                backStackEntry.arg(state.paramCountryId),
+                navHostController
+            )
         }
     }
 }

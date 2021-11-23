@@ -107,8 +107,8 @@ fun HomeNav(
     ) {
         composable(homeDestinations.countries) {
             CountriesDestination(
-                appComponent,
-                Modifier
+                appComponent = appComponent,
+                modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(),
             )
@@ -123,18 +123,22 @@ fun HomeNav(
 }
 
 @Composable
-fun CountriesDestination(appComponent: AppComponent, modifier: Modifier = Modifier) {
+fun CountriesDestination(
+    appComponent: AppComponent,
+    modifier: Modifier = Modifier,
+) {
     Countries(
         store {
             appComponent.countriesComponent().countriesStore()
         },
         modifier
-    ) { countryId ->
+    ) { countryId, navController ->
         TradeFlows(
-            store {
+            tradeFlowsStore = store {
                 appComponent.tradeFlowsComponent(countryId).tradeFlowsStore()
             },
-            Modifier
+            navController = navController,
+            modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
         )

@@ -7,10 +7,12 @@
 package by.overpass.countries.data
 
 import by.overpass.countries.data.countries.CountriesResponse
-import by.overpass.countries.data.flows.Hs92ProductsExportsImports
+import by.overpass.countries.data.flows.Hs92ExportsImports
 import by.overpass.countries.data.products.Products
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+
+const val HS92_ID_LENGTH_6 = 6.0
 
 internal const val ALL = "all"
 internal const val SHOW = "show"
@@ -28,7 +30,7 @@ interface OecApi {
         year: Int = LAST_YEAR,
         destination: String = ALL,
         products: String = SHOW,
-    ): Hs92ProductsExportsImports
+    ): Hs92ExportsImports
 
     suspend fun getProducts(classification: String = Classifications.HS92.value): Products
 }
@@ -47,12 +49,12 @@ internal class LegacyOecApi(
         year: Int,
         destination: String,
         products: String,
-    ): Hs92ProductsExportsImports =
+    ): Hs92ExportsImports =
         client.get(
             "$baseUrl${Classifications.HS92.value}/$tradeFlow/$year/$countryId" +
                     "/$destination/$products/"
         )
 
     override suspend fun getProducts(classification: String): Products =
-        client.get("attr/$classification/")
+        client.get("${baseUrl}attr/$classification/")
 }

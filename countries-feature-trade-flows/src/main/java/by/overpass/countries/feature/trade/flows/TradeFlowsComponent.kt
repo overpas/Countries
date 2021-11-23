@@ -6,6 +6,7 @@ package by.overpass.countries.feature.trade.flows
 
 import by.overpass.countries.data.NetworkComponent
 import by.overpass.countries.data.OecApi
+import by.overpass.countries.redux.CompositeMiddleware
 import by.overpass.countries.redux.Middleware
 import by.overpass.countries.redux.Reducer
 import by.overpass.countries.redux.Store
@@ -15,10 +16,13 @@ interface TradeFlowsComponent {
 
     val networkComponent: NetworkComponent
 
+    fun exportsTreeUseCase(oecApi: OecApi = networkComponent.countriesOecApi()): ExportsTreeUseCase
+
     fun tradeFlowsReducer(): Reducer<TradeFlowsState, TradeFlowsAction>
 
     fun tradeFlowsMiddleware(
         oecApi: OecApi = networkComponent.countriesOecApi(),
+        exportsTreeUseCase: ExportsTreeUseCase = exportsTreeUseCase(),
     ): Middleware<TradeFlowsState, TradeFlowsAction>
 
     fun tradeFlowsStore(
@@ -32,15 +36,30 @@ class RealTradeFlowsComponent(
     private val countryId: String,
 ) : TradeFlowsComponent {
 
+    override fun exportsTreeUseCase(oecApi: OecApi): ExportsTreeUseCase =
+        ExportsTreeOecUseCase(oecApi)
+
     override fun tradeFlowsReducer(): Reducer<TradeFlowsState, TradeFlowsAction> =
         TradeFlowsReducer()
 
-    override fun tradeFlowsMiddleware(oecApi: OecApi): Middleware<TradeFlowsState, TradeFlowsAction> =
-        TradeFlowsMiddleware(oecApi, countryId)
+    override fun tradeFlowsMiddleware(
+        oecApi: OecApi,
+        exportsTreeUseCase: ExportsTreeUseCase,
+    ): Middleware<TradeFlowsState, TradeFlowsAction> =
+        CompositeMiddleware(
+            listOf(
+                ExportsTreeMiddleware(exportsTreeUseCase, countryId),
+                CountryExportsMiddleware(oecApi, countryId)
+            )
+        )
 
     override fun tradeFlowsStore(
         middleware: Middleware<TradeFlowsState, TradeFlowsAction>,
         reducer: Reducer<TradeFlowsState, TradeFlowsAction>
     ): Store<TradeFlowsState, TradeFlowsAction> =
-        SimpleAndroidViewModelStore(middleware, reducer, TradeFlowsState.Loading)
+        SimpleAndroidViewModelStore(
+            middleware,
+            reducer,
+            TradeFlowsState.Loading,
+        )
 }

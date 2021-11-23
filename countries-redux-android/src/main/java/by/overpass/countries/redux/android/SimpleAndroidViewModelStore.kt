@@ -13,22 +13,27 @@ import by.overpass.countries.redux.Store
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
-public class SimpleAndroidViewModelStore<S : State, A : Action>(
+public open class SimpleAndroidViewModelStore<S : State, A : Action>(
     private val middleware: Middleware<S, A>,
     private val reducer: Reducer<S, A>,
-    initial: S,
+    initialState: S,
 ) : ViewModel(), Store<S, A> {
 
-    private val stateFlow: MutableStateFlow<S> = MutableStateFlow(initial)
+    private val stateFlow: MutableStateFlow<S> = MutableStateFlow(initialState)
     override val state: StateFlow<S> = stateFlow.asStateFlow()
 
     override fun dispatch(action: A) {
         viewModelScope.launch {
-            val processedAction = middleware.processAction(stateFlow.value, action)
-            val state = reducer.reduce(stateFlow.value, processedAction)
-            stateFlow.emit(state)
+            flowOf(action)
+                .flatMapMerge { middleware.processAction(stateFlow.value, it) }
+                .collect { action ->
+                    stateFlow.emit(reducer.reduce(stateFlow.value, action))
+                }
         }
     }
 }
