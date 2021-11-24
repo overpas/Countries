@@ -1,3 +1,9 @@
+/**
+ * Composite middleware test
+ */
+
+@file:Suppress("FILE_UNORDERED_IMPORTS")
+
 package by.overpass.countries.redux
 
 import kotlinx.coroutines.flow.toList

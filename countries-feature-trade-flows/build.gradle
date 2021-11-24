@@ -3,11 +3,6 @@ plugins {
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
     id("io.gitlab.arturbosch.detekt")
-    id "com.dicedmelon.gradle.jacoco-android"
-}
-
-jacoco {
-    toolVersion = "$jacoco_tool_version"
 }
 
 android {
@@ -49,12 +44,6 @@ android {
         kotlinCompilerVersion kotlin_version
     }
     testOptions {
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-                excludes += ['jdk.internal.*']
-            }
-        }
         unitTests.returnDefaultValues = true
     }
 }
@@ -78,8 +67,8 @@ dependencies {
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-okhttp:$ktor_version"
     implementation "io.ktor:ktor-client-serialization:$ktor_version"
-    implementation "io.github.overpas:treemap-core:0.0.2"
-    implementation "io.github.overpas:treemap-compose-android:0.0.2"
+    implementation "io.github.overpas:treemap-core:$treemap_version"
+    implementation "io.github.overpas:treemap-compose-android:$treemap_version"
     testImplementation "junit:junit:$junit_version"
     testImplementation "io.ktor:ktor-client-mock:$ktor_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"

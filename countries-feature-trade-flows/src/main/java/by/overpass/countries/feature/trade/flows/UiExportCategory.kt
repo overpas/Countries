@@ -1,9 +1,24 @@
+/**
+ * Exports categories
+ */
+
+@file:Suppress("MagicNumber")
+
 package by.overpass.countries.feature.trade.flows
 
 import by.overpass.countries.data.products.Product
 
-enum class UiExportCategory(val range: IntRange) {
+val Product.category: UiExportCategory?
+    get() {
+        val id = this.id.substring(2..3).toInt()
+        return UiExportCategory.values()
+            .find { category -> id in category.range }
+    }
 
+/**
+ * @property range the range of the product category in HS92
+ */
+enum class UiExportCategory(val range: IntRange) {
     AnimalsAndAnimalProducts(1..5),
     VegetableProducts(6..15),
     Foodstuffs(16..24),
@@ -19,12 +34,6 @@ enum class UiExportCategory(val range: IntRange) {
     MachineryAndElectrical(84..85),
     Transportation(86..89),
     Miscellaneous(90..97),
-    SpecialClassificationOrTemporaryLegislationAndModifications(98..99),
+    SCOTLAM(98..99), // SpecialClassificationOrTemporaryLegislationAndModifications
+    ;
 }
-
-val Product.category: UiExportCategory?
-    get() {
-        val id = this.id.substring(2..3).toInt()
-        return UiExportCategory.values()
-            .find { category -> id in category.range }
-    }

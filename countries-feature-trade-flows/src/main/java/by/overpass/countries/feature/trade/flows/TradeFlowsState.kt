@@ -8,6 +8,7 @@ sealed class TradeFlowsState : State {
     object Loading : TradeFlowsState()
 
     /**
+     * @property countryName the name of the country
      * @property exports the exports to be displayed
      */
     data class ExportsLoaded(
@@ -22,5 +23,8 @@ sealed class TradeFlowsState : State {
         val message: String,
     ) : TradeFlowsState()
 
+    /**
+     * @property message the loading step message
+     */
     data class LoadingPartOfExports(val message: String) : TradeFlowsState()
 }

@@ -15,7 +15,7 @@ class CountryExportsMiddleware(
         state: TradeFlowsState,
         action: TradeFlowsAction,
     ): Flow<TradeFlowsAction> = when (action) {
-        is TradeFlowsAction.ShowExportsChart -> {
+        is TradeFlowsAction.ShowExportsChart ->
             flowOf(action).map {
                 val countryName = oecApi.getCountries()
                     .countries
@@ -25,7 +25,6 @@ class CountryExportsMiddleware(
                     TradeFlowsAction.ShowExportsChartAndCountryName(it, action.exports)
                 } ?: TradeFlowsAction.ShowCountryNotFoundError
             }
-        }
         else -> flowOf(action)
     }
 }

@@ -8,7 +8,6 @@ import org.junit.Test
 class TradeFlowsReducerTest {
 
     private val reducer = TradeFlowsReducer()
-
     private val countryName = "countryName"
     private val exportsTree = tree(
         UiExport(

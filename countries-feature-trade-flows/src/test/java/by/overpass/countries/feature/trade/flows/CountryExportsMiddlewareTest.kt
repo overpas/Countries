@@ -32,7 +32,6 @@ class CountryExportsMiddlewareTest {
             "name"
         )
     }
-
     private val middleware = CountryExportsMiddleware(MockOecApi(), "lby")
 
     @Test

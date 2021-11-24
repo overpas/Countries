@@ -17,3 +17,7 @@ class CompositeMiddleware<S : State, A : Action>(
         return actionFlow
     }
 }
+
+infix operator fun <S : State, A : Action> Middleware<S, A>.plus(
+    middleware: Middleware<S, A>,
+): CompositeMiddleware<S, A> = CompositeMiddleware(listOf(this, middleware))

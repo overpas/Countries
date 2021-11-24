@@ -31,8 +31,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import by.overpass.countries.redux.Store
 import by.overpass.countries.ui.common.core.ContentLoading
 import by.overpass.countries.ui.common.theme.CountriesTheme
@@ -42,14 +42,16 @@ import by.overpass.countries.ui.common.theme.Transparent
 import by.overpass.countries.ui.common.theme.Typography
 import coil.compose.rememberImagePainter
 
+typealias TradeFlowsDestination = @Composable (
+    countryId: String,
+    navController: NavHostController
+) -> Unit
+
 @Composable
 fun Countries(
     countriesStore: Store<CountriesState, CountriesAction>,
     modifier: Modifier = Modifier,
-    TradeFlowsDestination: @Composable (
-        countryId: String,
-        navController: NavHostController
-    ) -> Unit,
+    TradeFlowsDestination: TradeFlowsDestination,
 ) {
     val countriesState: CountriesState by countriesStore.state.collectAsState()
     LaunchedEffect(true) {
@@ -62,10 +64,7 @@ fun Countries(
 fun CountriesContent(
     countriesState: CountriesState,
     modifier: Modifier = Modifier,
-    TradeFlowsDestination: @Composable (
-        countryId: String,
-        navController: NavHostController
-    ) -> Unit,
+    TradeFlowsDestination: TradeFlowsDestination,
 ) {
     when (countriesState) {
         is CountriesState.CountriesLoaded -> CountriesLoaded(
@@ -82,10 +81,7 @@ fun CountriesContent(
 fun CountriesLoaded(
     state: CountriesState.CountriesLoaded,
     modifier: Modifier = Modifier,
-    TradeFlowsDestination: @Composable (
-        countryId: String,
-        navController: NavHostController
-    ) -> Unit,
+    TradeFlowsDestination: TradeFlowsDestination,
 ) {
     val navHostController = rememberNavController()
     NavHost(

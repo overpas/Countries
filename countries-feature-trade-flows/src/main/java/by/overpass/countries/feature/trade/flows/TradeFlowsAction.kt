@@ -13,6 +13,7 @@ sealed class TradeFlowsAction : Action {
     object ShowCountryNotFoundError : TradeFlowsAction()
 
     /**
+     * @property countryName the name of the country
      * @property exports the list of exports to be shown
      */
     data class ShowExportsChartAndCountryName(
@@ -20,9 +21,15 @@ sealed class TradeFlowsAction : Action {
         val exports: Tree<UiExport>,
     ) : TradeFlowsAction()
 
+    /**
+     * @property exports the tree representing exports
+     */
     data class ShowExportsChart(
         val exports: Tree<UiExport>,
     ) : TradeFlowsAction()
 
+    /**
+     * @property message the loading step message
+     */
     data class LoadPartOfExports(val message: String) : TradeFlowsAction()
 }

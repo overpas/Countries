@@ -2,7 +2,11 @@
  * OEC API
  */
 
-@file:Suppress("LONG_NUMERICAL_VALUES_SEPARATED")
+@file:Suppress(
+    "LONG_NUMERICAL_VALUES_SEPARATED",
+    "FILE_UNORDERED_IMPORTS",
+    "CONSTANT_UPPERCASE",
+)
 
 package by.overpass.countries.data
 

@@ -6,11 +6,11 @@ package by.overpass.countries.feature.trade.flows
 
 import by.overpass.countries.data.NetworkComponent
 import by.overpass.countries.data.OecApi
-import by.overpass.countries.redux.CompositeMiddleware
 import by.overpass.countries.redux.Middleware
 import by.overpass.countries.redux.Reducer
 import by.overpass.countries.redux.Store
 import by.overpass.countries.redux.android.SimpleAndroidViewModelStore
+import by.overpass.countries.redux.plus
 
 interface TradeFlowsComponent {
 
@@ -46,11 +46,9 @@ class RealTradeFlowsComponent(
         oecApi: OecApi,
         exportsTreeUseCase: ExportsTreeUseCase,
     ): Middleware<TradeFlowsState, TradeFlowsAction> =
-        CompositeMiddleware(
-            listOf(
-                ExportsTreeMiddleware(exportsTreeUseCase, countryId),
-                CountryExportsMiddleware(oecApi, countryId)
-            )
+        ExportsTreeMiddleware(exportsTreeUseCase, countryId) + CountryExportsMiddleware(
+            oecApi,
+            countryId
         )
 
     override fun tradeFlowsStore(

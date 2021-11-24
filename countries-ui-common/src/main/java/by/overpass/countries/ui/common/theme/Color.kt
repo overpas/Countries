@@ -15,6 +15,7 @@ val Teal200 = Color(0xFF_03_DA_C5)
 val Transparent = Color(0x00_FF_FF_FF)
 val DimmedBlack = Color(0x50_00_00_00)
 
+@Suppress("CUSTOM_GETTERS_SETTERS")
 val String.rgbColor: Color
     get() = Color(
         substring(1..2).toInt(16),

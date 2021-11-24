@@ -1,3 +1,9 @@
+/**
+ * Exports treemap creation logic
+ */
+
+@file:Suppress("MagicNumber")
+
 package by.overpass.countries.feature.trade.flows
 
 import androidx.compose.ui.graphics.Color
@@ -16,6 +22,8 @@ private val mockExportsTree = tree(
     node(UiExport(1.0, Color.Black, "3"))
 }
 
+typealias ExportsCategories = List<Pair<UiExportCategory, List<UiExport>>>
+
 interface ExportsTreeUseCase {
 
     fun createExportsTree(countryId: String): Flow<ExportsTreeState>
@@ -23,16 +31,18 @@ interface ExportsTreeUseCase {
 
 sealed class ExportsTreeState {
 
-    data class Loaded(
-        val exports: Tree<UiExport>,
-    ) : ExportsTreeState()
-
     object LoadingExportsData : ExportsTreeState()
 
     object LoadingProductsData : ExportsTreeState()
 
     object VisualizingExportsChart : ExportsTreeState()
 
+    /**
+     * @property exports a tree representing exports
+     */
+    data class Loaded(
+        val exports: Tree<UiExport>,
+    ) : ExportsTreeState()
 }
 
 class ExportsTreeOecUseCase(
@@ -47,7 +57,7 @@ class ExportsTreeOecUseCase(
         emit(ExportsTreeState.LoadingProductsData)
         val products = oecApi.getProducts().data
         emit(ExportsTreeState.VisualizingExportsChart)
-        val visibleExports = mutableListOf<UiExport>()
+        val visibleExports: MutableList<UiExport> = mutableListOf()
         exports.forEach { export ->
             products.find { product -> product.id == export.hs92Id }
                 ?.let { product ->
@@ -59,7 +69,7 @@ class ExportsTreeOecUseCase(
                     )
                 }
         }
-        val categories = visibleExports.groupBy { it.category }
+        val categories = visibleExports.groupBy { it.category ?: UiExportCategory.SCOTLAM }
             .entries
             .map { (category, exports) ->
                 category to exports.separateInsignificant(
@@ -78,37 +88,42 @@ class ExportsTreeOecUseCase(
             .sortedByDescending { (category, exports) -> exports.sumOf { export -> export.value } }
         emit(
             ExportsTreeState.Loaded(
-                tree(
-                    UiExport(
-                        visibleExports.sumOf { it.value },
-                        Color.White,
-                        "All"
-                    )
-                ) {
-                    categories.forEach { (category, exports) ->
-                        node(
-                            UiExport(
-                                exports.sumOf { it.value },
-                                Color.White,
-                                category?.name ?: "",
-                                category,
-                            )
-                        ) {
-                            exports.forEach { export ->
-                                node(
-                                    UiExport(
-                                        export.value,
-                                        export.color,
-                                        export.name,
-                                        export.category,
-                                    ),
-                                )
-                            }
-                        }
-                    }
-                }
+                createExportsTree(
+                    visibleExports.sumOf { it.value },
+                    categories,
+                )
             )
         )
+    }
+
+    private fun createExportsTree(totalSum: Double, categories: ExportsCategories) = tree(
+        UiExport(
+            totalSum,
+            Color.White,
+            "All"
+        )
+    ) {
+        categories.forEach { (category, exports) ->
+            node(
+                UiExport(
+                    exports.sumOf { it.value },
+                    Color.White,
+                    category.name,
+                    category,
+                )
+            ) {
+                exports.forEach { export ->
+                    node(
+                        UiExport(
+                            export.value,
+                            export.color,
+                            export.name,
+                            export.category,
+                        ),
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -123,7 +138,7 @@ class MockExportsTreeUseCase(
     }
 }
 
-@Suppress("MagicNumber")
+@Suppress("FLOAT_IN_ACCURATE_CALCULATIONS")
 fun <T> List<T>.separateInsignificant(
     mainPercentage: Double,
     evaluator: (T) -> Double,
@@ -131,10 +146,10 @@ fun <T> List<T>.separateInsignificant(
 ): List<T> {
     val sorted = sortedByDescending(evaluator)
     val total = sorted.sumOf(evaluator)
-    val mainItems = mutableListOf<T>()
+    val mainItems: MutableList<T> = mutableListOf()
     val mainMax = mainPercentage * total
     var mainTotal = 0.0
-    val insignificantItems = mutableListOf<T>()
+    val insignificantItems: MutableList<T> = mutableListOf()
     sorted.forEach {
         if (mainTotal < mainMax) {
             mainTotal += evaluator(it)

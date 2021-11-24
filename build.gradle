@@ -23,6 +23,7 @@ buildscript {
         ktor_version = '1.6.5'
         coroutines_version = '1.5.2'
         retrofit_version = '2.9.0'
+        treemap_version = '0.0.2'
 
         // Test
         junit_version = '4.13.2'

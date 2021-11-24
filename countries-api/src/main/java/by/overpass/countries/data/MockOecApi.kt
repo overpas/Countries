@@ -4,8 +4,8 @@ package by.overpass.countries.data
 
 import by.overpass.countries.data.countries.CountriesResponse
 import by.overpass.countries.data.countries.Country
-import by.overpass.countries.data.flows.Hs92ProductExportsImports
 import by.overpass.countries.data.flows.Hs92ExportsImports
+import by.overpass.countries.data.flows.Hs92ProductExportsImports
 import by.overpass.countries.data.products.Product
 import by.overpass.countries.data.products.Products
 
