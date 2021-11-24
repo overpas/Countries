@@ -3,11 +3,6 @@ plugins {
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
     id("io.gitlab.arturbosch.detekt")
-    id "com.dicedmelon.gradle.jacoco-android"
-}
-
-jacoco {
-    toolVersion = "$jacoco_tool_version"
 }
 
 android {
@@ -27,9 +22,6 @@ android {
     }
 
     buildTypes {
-        debug {
-            testCoverageEnabled true
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -65,12 +57,6 @@ android {
         }
     }
     testOptions {
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-                excludes += ['jdk.internal.*']
-            }
-        }
         unitTests.returnDefaultValues = true
     }
 }
