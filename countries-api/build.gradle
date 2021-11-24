@@ -3,21 +3,6 @@ plugins {
     id 'kotlin'
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
     id "io.gitlab.arturbosch.detekt"
-    id "jacoco"
-}
-
-jacoco {
-    toolVersion = "$jacoco_tool_version"
-}
-
-jacocoTestReport {
-
-    dependsOn test
-
-    reports {
-        xml.enabled true
-        html.enabled true
-    }
 }
 
 java {
