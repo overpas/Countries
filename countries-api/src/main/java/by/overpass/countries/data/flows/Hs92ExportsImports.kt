@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
  * @property data exports imports data per hs92 product
  */
 @Serializable
-data class Hs92ProductsExportsImports(
+data class Hs92ExportsImports(
     @SerialName("data")
     val data: List<Hs92ProductExportsImports>
 )

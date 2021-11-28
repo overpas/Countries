@@ -33,7 +33,7 @@ object RealHomeComponent : HomeComponent {
     ): Store<HomeState, HomeAction> = SimpleAndroidViewModelStore(
         homeMiddleware,
         homeReducer,
-        HomeState.initial()
+        HomeState.initial(),
     )
 
     override fun homeMiddleware(): Middleware<HomeState, HomeAction> = HomeMiddleware()

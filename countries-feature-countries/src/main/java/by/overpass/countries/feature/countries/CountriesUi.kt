@@ -2,18 +2,19 @@
  * Countries UI
  */
 
+@file:Suppress("FunctionParameterNaming")
+
 package by.overpass.countries.feature.countries
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,7 +28,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import by.overpass.countries.redux.Store
+import by.overpass.countries.ui.common.core.ContentLoading
 import by.overpass.countries.ui.common.theme.CountriesTheme
 import by.overpass.countries.ui.common.theme.DimmedBlack
 import by.overpass.countries.ui.common.theme.Shapes
@@ -35,64 +42,104 @@ import by.overpass.countries.ui.common.theme.Transparent
 import by.overpass.countries.ui.common.theme.Typography
 import coil.compose.rememberImagePainter
 
+typealias TradeFlowsDestination = @Composable (
+    countryId: String,
+    navController: NavHostController
+) -> Unit
+
 @Composable
 fun Countries(
-    navHostController: NavHostController,
     countriesStore: Store<CountriesState, CountriesAction>,
+    modifier: Modifier = Modifier,
+    TradeFlowsDestination: TradeFlowsDestination,
 ) {
     val countriesState: CountriesState by countriesStore.state.collectAsState()
     LaunchedEffect(true) {
         countriesStore.dispatch(CountriesAction.LoadCountries)
     }
-    CountriesList(navHostController, countriesState)
+    CountriesContent(countriesState, modifier, TradeFlowsDestination)
 }
 
 @Composable
-fun CountriesList(
-    navHostController: NavHostController,
+fun CountriesContent(
     countriesState: CountriesState,
+    modifier: Modifier = Modifier,
+    TradeFlowsDestination: TradeFlowsDestination,
 ) {
     when (countriesState) {
-        is CountriesState.CountriesLoaded -> CountriesLoaded(navHostController, countriesState)
+        is CountriesState.CountriesLoaded -> CountriesLoaded(
+            countriesState,
+            modifier,
+            TradeFlowsDestination
+        )
         is CountriesState.Error -> TODO()
-        is CountriesState.Loading -> CountriesLoading()
+        is CountriesState.Loading -> ContentLoading(modifier)
     }
 }
 
-@Composable
-fun CountriesLoading(modifier: Modifier = Modifier) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-    ) {
-        CircularProgressIndicator(modifier)
-    }
-}
-
-@Suppress("UnusedPrivateMember")
 @Composable
 fun CountriesLoaded(
-    navHostController: NavHostController,
-    countriesState: CountriesState.CountriesLoaded,
+    state: CountriesState.CountriesLoaded,
+    modifier: Modifier = Modifier,
+    TradeFlowsDestination: TradeFlowsDestination,
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxWidth()
+    val navHostController = rememberNavController()
+    NavHost(
+        navController = navHostController,
+        startDestination = state.initialDestination,
+        modifier = modifier
     ) {
-        items(countriesState.countries) { country ->
-            CountryItem(country = country)
+        composable(state.countriesLoadedDestination) {
+            CountriesLoadedContent(
+                countriesState = state,
+                navHostController = navHostController,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        composable(
+            route = state.countryExportsDestination,
+            arguments = listOf(
+                navArgument(state.paramCountryId) { type = NavType.StringType },
+            )
+        ) { backStackEntry ->
+            TradeFlowsDestination(
+                backStackEntry.arg(state.paramCountryId),
+                navHostController
+            )
         }
     }
 }
 
 @Composable
-fun CountryItem(country: UiCountry) {
+fun CountriesLoadedContent(
+    countriesState: CountriesState.CountriesLoaded,
+    navHostController: NavHostController,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        modifier = modifier,
+    ) {
+        items(countriesState.countries) { country ->
+            CountryItem(
+                country = country,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                navHostController.navigate("exportsImports/${country.id}")
+            }
+        }
+    }
+}
+
+@Composable
+fun CountryItem(
+    country: UiCountry,
+    modifier: Modifier = Modifier,
+    onClick: (UiCountry) -> Unit,
+) {
     val itemHeight = 80.dp
     Box(
         contentAlignment = Alignment.BottomStart,
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
             .padding(horizontal = 12.dp, vertical = 6.dp)
             .clip(Shapes.medium),
     ) {
@@ -108,7 +155,8 @@ fun CountryItem(country: UiCountry) {
             text = country.name,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(itemHeight),
+                .height(itemHeight)
+                .clickable { onClick(country) },
         )
     }
 }
@@ -174,14 +222,6 @@ fun PreviewCountryItem() {
                 "https://legacy.oec.world/static/img/headers/country/eu.jpg",
                 "id",
             )
-        )
-    }
-}
-
-@Preview
-@Composable
-fun PreviewCountriesLoading() {
-    CountriesTheme {
-        CountriesLoading()
+        ) {}
     }
 }

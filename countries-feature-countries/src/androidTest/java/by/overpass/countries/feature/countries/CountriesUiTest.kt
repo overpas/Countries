@@ -1,10 +1,12 @@
 package by.overpass.countries.feature.countries
 
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.test.hasProgressBarRangeInfo
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.navigation.compose.rememberNavController
 import by.overpass.countries.data.MockOecApi
 import by.overpass.countries.data.RealNetworkComponent
 import by.overpass.countries.redux.android.store
@@ -26,7 +28,6 @@ class CountriesUiTest {
     fun testLoading() {
         composeTestRule.setContent {
             Countries(
-                rememberNavController(),
                 store {
                     countriesComponent.countriesStore(
                         countriesMiddleware = middleware,
@@ -34,8 +35,11 @@ class CountriesUiTest {
                             CountriesState.Loading
                         },
                     )
-                }
-            )
+                },
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+            ) { countryId, navController -> }
         }
 
         composeTestRule
@@ -47,11 +51,13 @@ class CountriesUiTest {
     fun testCountriesLoaded() {
         composeTestRule.setContent {
             Countries(
-                rememberNavController(),
                 store {
                     countriesComponent.countriesStore(countriesMiddleware = middleware)
-                }
-            )
+                },
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+            ) { countryId, navController -> }
         }
 
         composeTestRule
@@ -71,7 +77,6 @@ class CountriesUiTest {
     fun testCountriesLoadingError() {
         composeTestRule.setContent {
             Countries(
-                rememberNavController(),
                 store {
                     countriesComponent.countriesStore(
                         countriesMiddleware = middleware,
@@ -79,8 +84,11 @@ class CountriesUiTest {
                             CountriesState.Error("message")
                         },
                     )
-                }
-            )
+                },
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+            ) { countryId, navController -> }
         }
     }
 }

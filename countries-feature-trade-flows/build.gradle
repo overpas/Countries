@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version"
     id("io.gitlab.arturbosch.detekt")
@@ -9,16 +9,13 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "by.overpass.countries.economies"
         minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -33,7 +30,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
     }
     buildFeatures {
         compose true
@@ -41,20 +42,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
         kotlinCompilerVersion kotlin_version
-    }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
-    }
-    sourceSets {
-        def sharedTestDir = "src/sharedTest/java"
-        test {
-            java.srcDirs += sharedTestDir
-        }
-        androidTest {
-            java.srcDirs += sharedTestDir
-        }
     }
     testOptions {
         unitTests.returnDefaultValues = true
@@ -65,8 +52,6 @@ dependencies {
     implementation project(":countries-redux-android")
     implementation project(":countries-api")
     implementation project(":countries-ui-common")
-    implementation project(":countries-feature-countries")
-    implementation project(":countries-feature-trade-flows")
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "com.google.android.material:material:$google_android_material_version"
@@ -82,6 +67,8 @@ dependencies {
     implementation "io.ktor:ktor-client-core:$ktor_version"
     implementation "io.ktor:ktor-client-okhttp:$ktor_version"
     implementation "io.ktor:ktor-client-serialization:$ktor_version"
+    implementation "io.github.overpas:treemap-core:$treemap_version"
+    implementation "io.github.overpas:treemap-compose-android:$treemap_version"
     testImplementation "junit:junit:$junit_version"
     testImplementation "io.ktor:ktor-client-mock:$ktor_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"

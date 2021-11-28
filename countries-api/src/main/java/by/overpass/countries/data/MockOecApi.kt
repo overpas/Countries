@@ -4,8 +4,8 @@ package by.overpass.countries.data
 
 import by.overpass.countries.data.countries.CountriesResponse
 import by.overpass.countries.data.countries.Country
+import by.overpass.countries.data.flows.Hs92ExportsImports
 import by.overpass.countries.data.flows.Hs92ProductExportsImports
-import by.overpass.countries.data.flows.Hs92ProductsExportsImports
 import by.overpass.countries.data.products.Product
 import by.overpass.countries.data.products.Products
 
@@ -19,7 +19,7 @@ class MockOecApi : OecApi {
         year: Int,
         destination: String,
         products: String
-    ): Hs92ProductsExportsImports = Hs92ProductsExportsImports(testExportsImports)
+    ): Hs92ExportsImports = Hs92ExportsImports(testExportsImports)
 
     override suspend fun getProducts(classification: String): Products = Products(testProducts)
 

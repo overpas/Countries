@@ -18,3 +18,11 @@
   enabled: true
 - name: WHEN_WITHOUT_ELSE
   enabled: false
+- name: ENUM_VALUE
+  enabled: false
+- name: TOO_LONG_FUNCTION
+  enabled: true
+  configuration:
+    maxFunctionLength: 60
+- name: CUSTOM_GETTERS_SETTERS
+  enabled: false

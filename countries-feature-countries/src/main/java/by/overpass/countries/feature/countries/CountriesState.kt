@@ -14,7 +14,12 @@ sealed class CountriesState : State {
      */
     data class CountriesLoaded(
         val countries: List<UiCountry>
-    ) : CountriesState()
+    ) : CountriesState() {
+        val paramCountryId = "countryId"
+        val countriesLoadedDestination = "countriesLoaded"
+        val countryExportsDestination = "exportsImports/{$paramCountryId}"
+        val initialDestination = countriesLoadedDestination
+    }
 
     /**
      * @property message the message of the error

@@ -37,13 +37,13 @@ data class Product(
     @SerialName("color")
     val color: String,
     @SerialName("display_id")
-    val displayId: String,
+    val displayId: String?,
     @SerialName("icon")
     val icon: String,
     @SerialName("id")
     val id: String,
     @SerialName("image")
-    val image: String,
+    val image: String?,
     @SerialName("image_author")
     val imageAuthor: String? = null,
     @SerialName("image_link")
