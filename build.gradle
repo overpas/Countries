@@ -5,9 +5,9 @@ buildscript {
     ext {
         // Project
         agp_version = '7.0.3'
-        kotlin_version = '1.5.31'
+        kotlin_version = '1.6.10'
         diktat_version = '1.0.0-rc.4'
-        detekt_version = '1.18.1'
+        detekt_version = '1.19.0'
         kover_version = '0.4.2'
 
         // Libs
