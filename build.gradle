@@ -4,7 +4,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 buildscript {
     ext {
         // Project
-        agp_version = '7.0.3'
+        agp_version = '7.0.4'
         kotlin_version = '1.5.31'
         diktat_version = '1.0.0-rc.4'
         detekt_version = '1.19.0'
