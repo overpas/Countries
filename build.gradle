@@ -21,7 +21,7 @@ buildscript {
         coil_compose_version = '1.4.0'
         kotlin_serialization_json_version = '1.3.1'
         ktor_version = '1.6.7'
-        coroutines_version = '1.5.2'
+        coroutines_version = '1.6.0'
         retrofit_version = '2.9.0'
         treemap_version = '0.0.2'
 
