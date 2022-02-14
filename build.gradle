@@ -6,7 +6,7 @@ buildscript {
         // Project
         agp_version = '7.0.4'
         kotlin_version = '1.5.31'
-        diktat_version = '1.0.0-rc.4'
+        diktat_version = '1.0.3'
         detekt_version = '1.19.0'
         kover_version = '0.4.2'
 
