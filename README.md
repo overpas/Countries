@@ -5,3 +5,5 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/e2ee595426aa424a919df42cc459910d)](https://www.codacy.com/gh/overpas/Countries/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=overpas/Countries&amp;utm_campaign=Badge_Grade)
 
 Sample Android app about countries
+
+This is total garbage and failed experiments, ignore this
